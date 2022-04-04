@@ -7,29 +7,21 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     ManyToOne,
-    OneToMany,
 } from 'typeorm';
-import { TipoAlojamiento } from '@entities/TipoAlojamiento.entity';
-import { AdicionAlojamiento } from '@entities/AdicionAlojamiento.entity';
-import { Factura } from '@entities/Factura.entity';
+import { TipoMembresia } from '@entities/TipoMembresia.entity';
+import { Factura } from './Factura.entity';
 import { Usuario } from '@entities/Usuario.entity';
 
 @Entity()
-export class Alojamiento {
+export class Membresia {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column('int')
-    numeroPersonas: number;
-
-    @Column('int')
-    cantidadDias: number;
+    @Column()
+    fechaInicio: Date;
 
     @Column()
-    fechaIngreso: Date;
-
-    @Column()
-    fechaSalida: Date;
+    fechaFin: Date;
 
     @Column('numeric', {
         precision: 16,
@@ -45,29 +37,14 @@ export class Alojamiento {
     })
     public valorTotal: number;
 
-    @Column({
-        length: 200,
-        nullable: false,
-    })
-    imagen: string;
+    @ManyToOne(() => TipoMembresia, (tipoMembresia) => tipoMembresia.membresias)
+    tipoMembresia: TipoMembresia;
 
-    @ManyToOne(
-        () => TipoAlojamiento,
-        (tipoAlojamiento) => tipoAlojamiento.alojamientos,
-    )
-    tipoAlojamiento: TipoAlojamiento;
-
-    @ManyToOne(() => Usuario, (usuario) => usuario.alojamientos)
-    usuario: Usuario;
-
-    @OneToMany(
-        () => AdicionAlojamiento,
-        (adicionAlojamiento) => adicionAlojamiento.alojamiento,
-    )
-    adicionesAlojamientos: AdicionAlojamiento[];
-
-    @ManyToOne(() => Factura, (factura) => factura.alojamientos)
+    @ManyToOne(() => Factura, (factura) => factura.membresias)
     factura: Factura;
+
+    @ManyToOne(() => Usuario, (usuario) => usuario.membresias)
+    usuario: Usuario;
 
     @CreateDateColumn({
         type: 'timestamp',

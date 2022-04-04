@@ -6,9 +6,14 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     ManyToOne,
+    OneToMany,
 } from 'typeorm';
 import { Rol } from '@entities/Rol.entity';
 import { TipoDocumento } from '@entities/TipoDocumento.entity';
+import { Factura } from '@entities/Factura.entity';
+import { Alojamiento } from '@entities/Alojamiento.entity';
+import { Membresia } from '@entities/Membresia.entity';
+import { Entrada } from '@entities/Entrada.entity';
 
 @Entity()
 export class Usuario {
@@ -63,6 +68,18 @@ export class Usuario {
 
     @ManyToOne(() => TipoDocumento, (tipoDocumento) => tipoDocumento.usuarios)
     tipoDocumento: Rol;
+
+    @OneToMany(() => Factura, (factura) => factura.usuario)
+    facturas: Factura[];
+
+    @OneToMany(() => Alojamiento, (alojamiento) => alojamiento.usuario)
+    alojamientos: Alojamiento[];
+
+    @OneToMany(() => Membresia, (membresia) => membresia.usuario)
+    membresias: Membresia[];
+
+    @OneToMany(() => Entrada, (entrada) => entrada.usuario)
+    entradas: Entrada[];
 
     @CreateDateColumn({
         type: 'timestamp',
