@@ -8,6 +8,7 @@ import {
     OneToMany,
 } from 'typeorm';
 import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
+import { Membresia } from '@entities/Membresia.entity';
 
 @Entity()
 export class TipoMembresia {

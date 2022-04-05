@@ -8,7 +8,7 @@ import {
     ManyToOne,
     OneToMany,
 } from 'typeorm';
-import { Rol } from '@entities/Rol.entity';
+import { Roles } from '@entities/Roles.entity';
 import { TipoDocumento } from '@entities/TipoDocumento.entity';
 import { Factura } from '@entities/Factura.entity';
 import { Alojamiento } from '@entities/Alojamiento.entity';
@@ -63,11 +63,11 @@ export class Usuario {
     })
     contrasena: string;
 
-    @ManyToOne(() => Rol, (rol) => rol.usuarios)
-    rol: Rol;
+    @ManyToOne(() => Roles, (rol) => rol.usuarios)
+    rol: Roles;
 
     @ManyToOne(() => TipoDocumento, (tipoDocumento) => tipoDocumento.usuarios)
-    tipoDocumento: Rol;
+    tipoDocumento: Roles;
 
     @OneToMany(() => Factura, (factura) => factura.usuario)
     facturas: Factura[];

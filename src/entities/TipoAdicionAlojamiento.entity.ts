@@ -7,7 +7,6 @@ import {
     DeleteDateColumn,
     OneToMany,
 } from 'typeorm';
-import { Usuario } from '@entities/Usuario.entity';
 import { AdicionAlojamiento } from '@entities/AdicionAlojamiento.entity';
 import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
 
