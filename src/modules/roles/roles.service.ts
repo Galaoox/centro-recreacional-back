@@ -18,7 +18,6 @@ export class RolesService {
 
     async update(id: number, rol: UpdateRolDto): Promise<Roles> {
         const rolToUpdate = await this.rolesRepository.findOne(id);
-        console.log(rolToUpdate);
         if (!rolToUpdate) throw new Error("Rol doesn't exist");
         return this.rolesRepository.save({ ...rolToUpdate, ...rol });
     }

@@ -8,7 +8,6 @@ import {
     Param,
     Post,
     Put,
-    Query,
 } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { Roles } from '@entities/Roles.entity';

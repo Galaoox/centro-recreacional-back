@@ -25,12 +25,6 @@ export class Horario {
     descripcion: string;
 
     @Column({
-        length: 200,
-        nullable: false,
-    })
-    imagen: string;
-
-    @Column({
         length: 30,
         nullable: false,
     })
