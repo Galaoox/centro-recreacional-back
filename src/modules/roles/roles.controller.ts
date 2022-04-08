@@ -12,8 +12,8 @@ import {
 import { RolesService } from './roles.service';
 import { Roles } from '@entities/Roles.entity';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateRolDto } from './dto/create-rol.dto';
-import { UpdateRolDto } from './dto/update-rol.dto';
+import { InputRolDto } from './dto/input-rol.dto';
+import { RolDto } from './dto/rol.dto';
 
 @ApiTags('Roles')
 @Controller('roles')
@@ -21,21 +21,21 @@ export class RolesController {
     constructor(private _rolesService: RolesService) {}
 
     @Post()
-    async create(@Body() createRolDto: CreateRolDto) {
+    async create(@Body() rol: InputRolDto) {
         try {
-            await this._rolesService.create(createRolDto);
+            await this._rolesService.create(rol);
         } catch (error) {
             throw new BadRequestException();
         }
     }
 
     @Get()
-    async findAll(): Promise<Roles[]> {
+    async findAll(): Promise<RolDto[]> {
         return await this._rolesService.findAll();
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: number): Promise<Roles> {
+    async findOne(@Param('id') id: number): Promise<RolDto> {
         try {
             return await this._rolesService.findOne(id);
         } catch (error) {
@@ -44,9 +44,9 @@ export class RolesController {
     }
 
     @Put(':id')
-    async update(@Param('id') id: number, @Body() updateRolDto: UpdateRolDto) {
+    async update(@Param('id') id: number, @Body() rol: InputRolDto) {
         try {
-            await this._rolesService.update(id, updateRolDto);
+            await this._rolesService.update(id, rol);
         } catch (error) {
             throw new NotFoundException();
         }
