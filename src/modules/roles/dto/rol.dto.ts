@@ -5,9 +5,4 @@ export class RolDto {
     id: number;
     @ApiProperty()
     nombre: string;
-
-    constructor(id: number, nombre: string) {
-        this.id = id;
-        this.nombre = nombre;
-    }
 }

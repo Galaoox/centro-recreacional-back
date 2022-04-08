@@ -1,9 +1,10 @@
 import { Horario } from '@entities/Horario.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { dateToHourAndMinutes } from '@utils/transformDate';
 import { Repository } from 'typeorm';
-import { CreateHorarioDto } from './dto/create-horario.dto';
-import { UpdateHorarioDto } from './dto/update-horario.dto';
+import { HorarioDto } from './dto/horario.dto';
+import { InputHorarioDto } from './dto/input-horario.dto';
 
 @Injectable()
 export class HorariosService {
@@ -12,22 +13,37 @@ export class HorariosService {
         private horarioRepository: Repository<Horario>,
     ) {}
 
-    async create(horario: CreateHorarioDto): Promise<Horario> {
-        return this.horarioRepository.save(horario);
+    async create(horario: InputHorarioDto): Promise<void> {
+        const data = {
+            ...horario,
+            horaInicial: dateToHourAndMinutes(new Date(horario.horaInicial)),
+            horaFinal: dateToHourAndMinutes(new Date(horario.horaFinal)),
+        };
+        console.log(data);
+        this.horarioRepository.save(data);
     }
 
-    async update(id: number, horario: UpdateHorarioDto): Promise<Horario> {
+    async update(id: number, horario: InputHorarioDto): Promise<Horario> {
         const horarioToUpdate = await this.horarioRepository.findOne(id);
         if (!horarioToUpdate) throw new Error("Horario doesn't exist");
-        return this.horarioRepository.save({ ...horarioToUpdate, ...horario });
+        return this.horarioRepository.save({
+            ...horarioToUpdate,
+            ...horario,
+            horaInicial: dateToHourAndMinutes(new Date(horario.horaInicial)),
+            horaFinal: dateToHourAndMinutes(new Date(horario.horaFinal)),
+        });
     }
 
-    findAll(): Promise<Horario[]> {
-        return this.horarioRepository.find();
+    findAll(): Promise<HorarioDto[]> {
+        return this.horarioRepository.find({
+            select: ['id', 'nombre', 'descripcion', 'horaInicial', 'horaFinal'],
+        });
     }
 
-    async findOne(id: number): Promise<Horario> {
-        const data = await this.horarioRepository.findOne(id);
+    async findOne(id: number): Promise<HorarioDto> {
+        const data = await this.horarioRepository.findOne(id, {
+            select: ['id', 'nombre', 'descripcion', 'horaInicial', 'horaFinal'],
+        });
         if (!data) throw new Error('Horario not found');
         return data;
     }

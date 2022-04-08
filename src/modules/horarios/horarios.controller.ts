@@ -10,10 +10,9 @@ import {
     Put,
 } from '@nestjs/common';
 import { HorariosService } from './horarios.service';
-import { Horario } from '@entities/Horario.entity';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateHorarioDto } from './dto/create-horario.dto';
-import { UpdateHorarioDto } from './dto/update-horario.dto';
+import { InputHorarioDto } from './dto/input-horario.dto';
+import { HorarioDto } from './dto/horario.dto';
 
 @ApiTags('Horarios')
 @Controller('horarios')
@@ -21,21 +20,22 @@ export class HorariosController {
     constructor(private rolesService: HorariosService) {}
 
     @Post()
-    async create(@Body() createRolDto: CreateHorarioDto) {
+    async create(@Body() horario: InputHorarioDto) {
         try {
-            await this.rolesService.create(createRolDto);
+            await this.rolesService.create(horario);
         } catch (error) {
+            console.log(error);
             throw new BadRequestException();
         }
     }
 
     @Get()
-    async findAll(): Promise<Horario[]> {
+    async findAll(): Promise<HorarioDto[]> {
         return await this.rolesService.findAll();
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: number): Promise<Horario> {
+    async findOne(@Param('id') id: number): Promise<HorarioDto> {
         try {
             return await this.rolesService.findOne(id);
         } catch (error) {
@@ -44,7 +44,7 @@ export class HorariosController {
     }
 
     @Put(':id')
-    async update(@Param('id') id: number, @Body() horario: UpdateHorarioDto) {
+    async update(@Param('id') id: number, @Body() horario: InputHorarioDto) {
         try {
             await this.rolesService.update(id, horario);
         } catch (error) {

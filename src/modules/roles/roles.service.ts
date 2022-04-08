@@ -28,8 +28,12 @@ export class RolesService {
         });
     }
 
-    findOne(id: number): Promise<RolDto> {
-        return this.rolesRepository.findOne(id, { select: ['id', 'nombre'] });
+    async findOne(id: number): Promise<RolDto> {
+        const data = await this.rolesRepository.findOne(id, {
+            select: ['id', 'nombre'],
+        });
+        if (!data) throw new Error('Rol not found');
+        return data;
     }
 
     async remove(id: number): Promise<any> {

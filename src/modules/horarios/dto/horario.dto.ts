@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-
-export class CreateHorarioDto {
+export class HorarioDto {
+    @ApiProperty()
+    id: number;
     @ApiProperty()
     nombre: string;
     @ApiProperty()
