@@ -24,14 +24,17 @@ export class HorariosController {
         try {
             await this.rolesService.create(horario);
         } catch (error) {
-            console.log(error);
             throw new BadRequestException();
         }
     }
 
     @Get()
     async findAll(): Promise<HorarioDto[]> {
-        return await this.rolesService.findAll();
+        try {
+            return await this.rolesService.findAll();
+        } catch (error) {
+            throw new BadRequestException();
+        }
     }
 
     @Get(':id')

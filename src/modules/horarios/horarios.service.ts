@@ -19,7 +19,6 @@ export class HorariosService {
             horaInicial: dateToHourAndMinutes(new Date(horario.horaInicial)),
             horaFinal: dateToHourAndMinutes(new Date(horario.horaFinal)),
         };
-        console.log(data);
         this.horarioRepository.save(data);
     }
 

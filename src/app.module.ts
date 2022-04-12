@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RolesModule } from '@modules/roles/roles.module';
 import { HorariosModule } from '@modules/horarios/horarios.module';
 import { CategoriasMenuModule } from '@modules/categorias-menu/categorias-menu.module';
+import { AtraccionesModule } from '@modules/atracciones/atracciones.module';
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import { CategoriasMenuModule } from '@modules/categorias-menu/categorias-menu.m
         RolesModule,
         HorariosModule,
         CategoriasMenuModule,
+        AtraccionesModule,
     ],
     controllers: [],
     providers: [AppService],
