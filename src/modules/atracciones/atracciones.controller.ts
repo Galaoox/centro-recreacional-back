@@ -9,7 +9,6 @@ import {
     Post,
     Put,
     UploadedFile,
-    UploadedFiles,
     UseInterceptors,
 } from '@nestjs/common';
 import { InputAtraccionDto } from './dto/input-atraccion.dto';
@@ -17,7 +16,6 @@ import { AtraccionDto } from './dto/atraccion.dto';
 import { AtraccionesService } from './atracciones.service';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Express } from 'express';
 import { editFileName, imageFileFilter } from '@utils/file-upload.utility';
 import { diskStorage } from 'multer';
 
@@ -27,6 +25,15 @@ export class AtraccionesController {
     constructor(private atraccionesService: AtraccionesService) {}
 
     @Post()
+    async create(@Body() atraccion: InputAtraccionDto) {
+        try {
+            await this.atraccionesService.create(atraccion);
+        } catch (error) {
+            throw new BadRequestException();
+        }
+    }
+
+    @Post('upload/:id')
     @UseInterceptors(
         FileInterceptor('image', {
             storage: diskStorage({
@@ -36,15 +43,15 @@ export class AtraccionesController {
             fileFilter: imageFileFilter,
         }),
     )
-    async create(
-        // @Body() rol: InputAtraccionDto,
+    async upload(
         @UploadedFile() image: Express.Multer.File,
+        @Param('id') id: number,
     ) {
         try {
-            console.log(image);
-            // await this.atraccionesService.create(rol);
+            await this.atraccionesService.uploadImage(id, image.path);
         } catch (error) {
-            throw new BadRequestException();
+            console.log(error);
+            throw new NotFoundException();
         }
     }
 
@@ -63,9 +70,12 @@ export class AtraccionesController {
     }
 
     @Put(':id')
-    async update(@Param('id') id: number, @Body() rol: InputAtraccionDto) {
+    async update(
+        @Param('id') id: number,
+        @Body() atraccion: InputAtraccionDto,
+    ) {
         try {
-            await this.atraccionesService.update(id, rol);
+            await this.atraccionesService.update(id, atraccion);
         } catch (error) {
             throw new NotFoundException();
         }

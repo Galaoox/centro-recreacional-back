@@ -5,6 +5,4 @@ export class InputAtraccionDto {
     nombre: string;
     @ApiProperty()
     descripcion: string;
-    @ApiProperty()
-    imagen: string;
 }

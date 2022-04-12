@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { InputAtraccionDto } from './dto/input-atraccion.dto';
 import { AtraccionDto } from './dto/atraccion.dto';
+import { deleteFile } from '@utils/file-upload.utility';
 
 @Injectable()
 export class AtraccionesService {
@@ -12,14 +13,23 @@ export class AtraccionesService {
         private atraccionesRepository: Repository<Atraccion>,
     ) {}
 
-    async create(rol: InputAtraccionDto): Promise<void> {
-        this.atraccionesRepository.save(rol);
+    async create(atraccion: InputAtraccionDto): Promise<AtraccionDto> {
+        return await this.atraccionesRepository.save(atraccion);
     }
 
-    async update(id: number, rol: InputAtraccionDto): Promise<void> {
-        const rolToUpdate = await this.atraccionesRepository.findOne(id);
-        if (!rolToUpdate) throw new Error("Rol doesn't exist");
-        this.atraccionesRepository.save({ ...rolToUpdate, ...rol });
+    async update(id: number, atraccion: InputAtraccionDto): Promise<void> {
+        const atraccionToUpdate = await this.atraccionesRepository.findOne(id);
+        if (!atraccionToUpdate) throw new Error("atraccion doesn't exist");
+        this.atraccionesRepository.save({ ...atraccionToUpdate, ...atraccion });
+    }
+
+    async uploadImage(id: number, imagen: string): Promise<void> {
+        const atraccionToUpdate = await this.atraccionesRepository.findOne(id);
+        if (!atraccionToUpdate) throw new Error("atraccion doesn't exist");
+        console.log(id, atraccionToUpdate);
+        deleteFile(atraccionToUpdate.imagen);
+        atraccionToUpdate.imagen = imagen;
+        this.atraccionesRepository.save(atraccionToUpdate);
     }
 
     async findAll(): Promise<AtraccionDto[]> {
@@ -32,7 +42,7 @@ export class AtraccionesService {
         const data = await this.atraccionesRepository.findOne(id, {
             select: ['id', 'nombre'],
         });
-        if (!data) throw new Error('Rol not found');
+        if (!data) throw new Error('atraccion not found');
         return data;
     }
 

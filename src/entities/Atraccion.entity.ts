@@ -26,7 +26,7 @@ export class Atraccion {
 
     @Column({
         length: 200,
-        nullable: false,
+        nullable: true,
     })
     imagen: string;
 
