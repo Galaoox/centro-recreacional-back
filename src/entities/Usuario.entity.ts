@@ -8,12 +8,12 @@ import {
     ManyToOne,
     OneToMany,
 } from 'typeorm';
-import { Roles } from '@entities/Roles.entity';
-import { TipoDocumento } from '@entities/TipoDocumento.entity';
-import { Factura } from '@entities/Factura.entity';
-import { Alojamiento } from '@entities/Alojamiento.entity';
-import { Membresia } from '@entities/Membresia.entity';
-import { Entrada } from '@entities/Entrada.entity';
+import { Roles } from '@entities/roles.entity';
+import { Factura } from '@entities/factura.entity';
+import { Alojamiento } from '@entities/alojamiento.entity';
+import { Membresia } from '@entities/membresia.entity';
+import { Entrada } from '@entities/entrada.entity';
+import { TipoDocumento } from '@entities/tipo-documento.entity';
 
 @Entity()
 export class Usuario {

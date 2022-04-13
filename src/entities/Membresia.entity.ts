@@ -8,9 +8,9 @@ import {
     DeleteDateColumn,
     ManyToOne,
 } from 'typeorm';
-import { TipoMembresia } from '@entities/TipoMembresia.entity';
-import { Factura } from './Factura.entity';
-import { Usuario } from '@entities/Usuario.entity';
+import { Factura } from '@entities/factura.entity';
+import { Usuario } from '@entities/usuario.entity';
+import { TipoMembresia } from '@entities/tipo-membresia.entity';
 
 @Entity()
 export class Membresia {

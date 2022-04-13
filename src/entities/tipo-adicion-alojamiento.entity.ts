@@ -7,10 +7,11 @@ import {
     DeleteDateColumn,
     OneToMany,
 } from 'typeorm';
-import { Usuario } from '@entities/Usuario.entity';
+import { AdicionAlojamiento } from '@entities/adicion-alojamiento.entity';
+import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
 
 @Entity()
-export class TipoDocumento {
+export class TipoAdicionAlojamiento {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -20,14 +21,30 @@ export class TipoDocumento {
     })
     nombre: string;
 
+    @Column({
+        length: 200,
+        nullable: false,
+    })
+    descripcion: string;
+
+    @Column('numeric', {
+        precision: 16,
+        scale: 2,
+        transformer: new ColumnNumericTransformer(),
+    })
+    public valor: number;
+
+    @OneToMany(
+        () => AdicionAlojamiento,
+        (adicionAlojamiento) => adicionAlojamiento.tipoAdicionAlojamiento,
+    )
+    adicionesAlojamientos: AdicionAlojamiento[];
+
     @CreateDateColumn({
         type: 'timestamp',
         default: () => 'CURRENT_TIMESTAMP(6)',
     })
     public created_at: Date;
-
-    @OneToMany(() => Usuario, (usuario) => usuario.rol)
-    usuarios: Usuario[];
 
     @UpdateDateColumn({
         type: 'timestamp',

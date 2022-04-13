@@ -1,4 +1,3 @@
-import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
 import {
     Entity,
     Column,
@@ -8,18 +7,12 @@ import {
     DeleteDateColumn,
     OneToMany,
 } from 'typeorm';
-import { Alojamiento } from '@entities/Alojamiento.entity';
+import { ElementoMenu } from '@entities/elemento-menu.entity';
 
 @Entity()
-export class TipoAlojamiento {
+export class CategoriaMenu {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column({
-        length: 200,
-        nullable: false,
-    })
-    descripcion: string;
 
     @Column({
         length: 50,
@@ -27,27 +20,14 @@ export class TipoAlojamiento {
     })
     nombre: string;
 
-    @Column('int')
-    capacidadPersonas: number;
-
-    @Column('int')
-    cantidadDisponibles: number;
-
-    @Column('numeric', {
-        precision: 16,
-        scale: 2,
-        transformer: new ColumnNumericTransformer(),
-    })
-    public valor: number;
-
     @Column({
         length: 200,
         nullable: false,
     })
-    imagen: string;
+    descripcion: string;
 
-    @OneToMany(() => Alojamiento, (alojamiento) => alojamiento.tipoAlojamiento)
-    alojamientos: Alojamiento[];
+    @OneToMany(() => ElementoMenu, (elementoMenu) => elementoMenu.categoriaMenu)
+    elementosMenu: ElementoMenu[];
 
     @CreateDateColumn({
         type: 'timestamp',

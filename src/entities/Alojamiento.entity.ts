@@ -9,10 +9,10 @@ import {
     ManyToOne,
     OneToMany,
 } from 'typeorm';
-import { TipoAlojamiento } from '@entities/TipoAlojamiento.entity';
-import { AdicionAlojamiento } from '@entities/AdicionAlojamiento.entity';
-import { Factura } from '@entities/Factura.entity';
-import { Usuario } from '@entities/Usuario.entity';
+import { TipoAlojamiento } from '@entities/tipo-alojamiento.entity';
+import { AdicionAlojamiento } from '@entities/adicion-alojamiento.entity';
+import { Factura } from '@entities/factura.entity';
+import { Usuario } from '@entities/usuario.entity';
 
 @Entity()
 export class Alojamiento {

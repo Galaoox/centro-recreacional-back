@@ -7,10 +7,10 @@ import {
     DeleteDateColumn,
     OneToMany,
 } from 'typeorm';
-import { ElementoMenu } from '@entities/ElementoMenu.entity';
+import { Usuario } from '@entities/usuario.entity';
 
 @Entity()
-export class CategoriaMenu {
+export class TipoDocumento {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -20,20 +20,14 @@ export class CategoriaMenu {
     })
     nombre: string;
 
-    @Column({
-        length: 200,
-        nullable: false,
-    })
-    descripcion: string;
-
-    @OneToMany(() => ElementoMenu, (elementoMenu) => elementoMenu.categoriaMenu)
-    elementosMenu: ElementoMenu[];
-
     @CreateDateColumn({
         type: 'timestamp',
         default: () => 'CURRENT_TIMESTAMP(6)',
     })
     public created_at: Date;
+
+    @OneToMany(() => Usuario, (usuario) => usuario.rol)
+    usuarios: Usuario[];
 
     @UpdateDateColumn({
         type: 'timestamp',

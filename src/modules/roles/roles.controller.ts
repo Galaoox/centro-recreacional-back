@@ -10,7 +10,7 @@ import {
     Put,
 } from '@nestjs/common';
 import { RolesService } from './roles.service';
-import { Roles } from '@entities/Roles.entity';
+import { Roles } from '@entities/roles.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { InputRolDto } from './dto/input-rol.dto';
 import { RolDto } from './dto/rol.dto';

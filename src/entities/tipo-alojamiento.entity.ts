@@ -1,3 +1,4 @@
+import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
 import {
     Entity,
     Column,
@@ -7,13 +8,18 @@ import {
     DeleteDateColumn,
     OneToMany,
 } from 'typeorm';
-import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
-import { Membresia } from '@entities/Membresia.entity';
+import { Alojamiento } from '@entities/alojamiento.entity';
 
 @Entity()
-export class TipoMembresia {
+export class TipoAlojamiento {
     @PrimaryGeneratedColumn()
     id: number;
+
+    @Column({
+        length: 200,
+        nullable: false,
+    })
+    descripcion: string;
 
     @Column({
         length: 50,
@@ -21,11 +27,11 @@ export class TipoMembresia {
     })
     nombre: string;
 
-    @Column({
-        length: 200,
-        nullable: false,
-    })
-    descripcion: string;
+    @Column('int')
+    capacidadPersonas: number;
+
+    @Column('int')
+    cantidadDisponibles: number;
 
     @Column('numeric', {
         precision: 16,
@@ -34,8 +40,14 @@ export class TipoMembresia {
     })
     public valor: number;
 
-    @OneToMany(() => Membresia, (membresia) => membresia.tipoMembresia)
-    membresias: Membresia[];
+    @Column({
+        length: 200,
+        nullable: false,
+    })
+    imagen: string;
+
+    @OneToMany(() => Alojamiento, (alojamiento) => alojamiento.tipoAlojamiento)
+    alojamientos: Alojamiento[];
 
     @CreateDateColumn({
         type: 'timestamp',

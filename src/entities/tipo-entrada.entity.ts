@@ -1,3 +1,5 @@
+import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
+import { Entrada } from '@entities/entrada.entity';
 import {
     Entity,
     Column,
@@ -7,11 +9,9 @@ import {
     DeleteDateColumn,
     OneToMany,
 } from 'typeorm';
-import { AdicionAlojamiento } from '@entities/AdicionAlojamiento.entity';
-import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
 
 @Entity()
-export class TipoAdicionAlojamiento {
+export class TipoEntrada {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -34,11 +34,8 @@ export class TipoAdicionAlojamiento {
     })
     public valor: number;
 
-    @OneToMany(
-        () => AdicionAlojamiento,
-        (adicionAlojamiento) => adicionAlojamiento.tipoAdicionAlojamiento,
-    )
-    adicionesAlojamientos: AdicionAlojamiento[];
+    @OneToMany(() => Entrada, (entrada) => entrada.tipoEntrada)
+    entradas: Entrada[];
 
     @CreateDateColumn({
         type: 'timestamp',

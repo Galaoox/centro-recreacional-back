@@ -8,8 +8,8 @@ import {
     DeleteDateColumn,
     ManyToOne,
 } from 'typeorm';
-import { Alojamiento } from '@entities/Alojamiento.entity';
-import { TipoAdicionAlojamiento } from '@entities/TipoAdicionAlojamiento.entity';
+import { Alojamiento } from '@entities/alojamiento.entity';
+import { TipoAdicionAlojamiento } from '@entities/tipo-adicion-alojamiento.entity';
 
 @Entity()
 export class AdicionAlojamiento {

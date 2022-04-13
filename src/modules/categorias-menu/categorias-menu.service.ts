@@ -1,4 +1,4 @@
-import { CategoriaMenu } from '@entities/CategoriaMenu.entity';
+import { CategoriaMenu } from '@entities/categoria-menu.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

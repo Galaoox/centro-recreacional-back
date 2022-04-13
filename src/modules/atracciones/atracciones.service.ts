@@ -1,4 +1,4 @@
-import { Atraccion } from '@entities/Atraccion.entity';
+import { Atraccion } from '@entities/atraccion.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

@@ -1,4 +1,4 @@
-import { Horario } from '@entities/Horario.entity';
+import { Horario } from '@entities/horario.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dateToHourAndMinutes } from '@utils/transformDate';

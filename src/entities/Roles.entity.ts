@@ -7,7 +7,7 @@ import {
     DeleteDateColumn,
     OneToMany,
 } from 'typeorm';
-import { Usuario } from '@entities/Usuario.entity';
+import { Usuario } from '@entities/usuario.entity';
 
 @Entity()
 export class Roles {

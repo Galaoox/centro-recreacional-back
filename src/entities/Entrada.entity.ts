@@ -7,10 +7,10 @@ import {
     DeleteDateColumn,
     ManyToOne,
 } from 'typeorm';
-import { Usuario } from '@entities/Usuario.entity';
+import { Usuario } from '@entities/usuario.entity';
 import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
-import { Factura } from '@entities/Factura.entity';
-import { TipoEntrada } from '@entities/TipoEntrada.entity';
+import { Factura } from '@entities/factura.entity';
+import { TipoEntrada } from '@entities/tipo-entrada.entity';
 
 @Entity()
 export class Entrada {

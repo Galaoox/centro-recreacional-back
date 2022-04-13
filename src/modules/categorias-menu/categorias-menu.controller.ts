@@ -1,4 +1,3 @@
-import { CategoriaMenu } from '@entities/CategoriaMenu.entity';
 import {
     BadRequestException,
     Body,
@@ -12,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CategoriasMenuService } from './categorias-menu.service';
+import { CategoriaMenuDto } from './dto/categoria-menu.dto';
 import { InputCategoriaMenuDto } from './dto/input-categoria-menu.dto';
 
 @ApiTags('Categorias menu')
@@ -29,12 +29,12 @@ export class CategoriasMenuController {
     }
 
     @Get()
-    async findAll(): Promise<CategoriaMenu[]> {
+    async findAll(): Promise<CategoriaMenuDto[]> {
         return await this.categoriasMenuService.findAll();
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: number): Promise<CategoriaMenu> {
+    async findOne(@Param('id') id: number): Promise<CategoriaMenuDto> {
         try {
             return await this.categoriasMenuService.findOne(id);
         } catch (error) {

@@ -1,4 +1,4 @@
-import { Horario } from '@entities/Horario.entity';
+import { Horario } from '@entities/horario.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HorariosController } from './horarios.controller';

@@ -8,11 +8,11 @@ import {
     ManyToOne,
     OneToMany,
 } from 'typeorm';
-import { Usuario } from '@entities/Usuario.entity';
+import { Usuario } from '@entities/usuario.entity';
 import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
-import { Membresia } from '@entities/Membresia.entity';
-import { Alojamiento } from '@entities/Alojamiento.entity';
-import { Entrada } from '@entities/Entrada.entity';
+import { Membresia } from '@entities/membresia.entity';
+import { Alojamiento } from '@entities/alojamiento.entity';
+import { Entrada } from '@entities/entrada.entity';
 
 @Entity()
 export class Factura {

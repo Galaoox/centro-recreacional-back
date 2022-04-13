@@ -8,7 +8,7 @@ import {
     DeleteDateColumn,
     ManyToOne,
 } from 'typeorm';
-import { CategoriaMenu } from '@entities/CategoriaMenu.entity';
+import { CategoriaMenu } from '@entities/categoria-menu.entity';
 
 @Entity()
 export class ElementoMenu {
