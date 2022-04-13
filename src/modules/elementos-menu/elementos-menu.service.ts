@@ -30,8 +30,10 @@ export class ElementosMenuService {
         });
     }
 
-    findAll(): Promise<ElementoMenuDto[]> {
-        return this.elementoMenuRepository.find();
+    async findAll(): Promise<ElementoMenuDto[]> {
+        const data = await this.elementoMenuRepository.find();
+        console.log(data);
+        return data;
     }
 
     async findOne(id: number): Promise<ElementoMenuDto> {

@@ -29,7 +29,7 @@ export class ElementoMenu {
 
     @Column({
         length: 200,
-        nullable: false,
+        nullable: true,
     })
     imagen: string;
 
