@@ -26,7 +26,6 @@ export class AtraccionesService {
     async uploadImage(id: number, imagen: string): Promise<void> {
         const atraccionToUpdate = await this.atraccionesRepository.findOne(id);
         if (!atraccionToUpdate) throw new Error("atraccion doesn't exist");
-        console.log(id, atraccionToUpdate);
         deleteFile(atraccionToUpdate.imagen);
         atraccionToUpdate.imagen = imagen;
         this.atraccionesRepository.save(atraccionToUpdate);

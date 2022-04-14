@@ -1,3 +1,4 @@
+import { InputCategoriaMenuDto } from '@modules/categorias-menu/dto/input-categoria-menu.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ElementoMenuDto {
@@ -9,4 +10,6 @@ export class ElementoMenuDto {
     descripcion: string;
     @ApiProperty()
     valor: number;
+    @ApiProperty()
+    categoriaMenu: Partial<InputCategoriaMenuDto>;
 }

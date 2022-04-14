@@ -8,9 +8,15 @@ import {
     Param,
     Post,
     Put,
+    UploadedFile,
+    UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
+import { editFileName, imageFileFilter } from '@utils/file-upload.utility';
+import { diskStorage } from 'multer';
 import { ElementoMenuDto } from './dto/elemento-menu.dto';
+import { GroupedElementoMenuDto } from './dto/grouped-elemento-menu.dto';
 import { InputElementoMenuDto } from './dto/input-elemento-menu.dto';
 import { ElementosMenuService } from './elementos-menu.service';
 
@@ -20,10 +26,13 @@ export class ElementosMenuController {
     constructor(private elementosMenuService: ElementosMenuService) {}
 
     @Post()
-    async create(@Body() categoriaMenu: InputElementoMenuDto) {
+    async create(
+        @Body() categoriaMenu: InputElementoMenuDto,
+    ): Promise<ElementoMenuDto> {
         try {
-            await this.elementosMenuService.create(categoriaMenu);
+            return await this.elementosMenuService.create(categoriaMenu);
         } catch (error) {
+            console.error(error);
             throw new BadRequestException();
         }
     }
@@ -33,13 +42,19 @@ export class ElementosMenuController {
         return await this.elementosMenuService.findAll();
     }
 
-    @Get(':id')
+    @Get('findOne/:id')
     async findOne(@Param('id') id: number): Promise<ElementoMenuDto> {
         try {
             return await this.elementosMenuService.findOne(id);
         } catch (error) {
+            console.error(error);
             throw new NotFoundException();
         }
+    }
+
+    @Get('/grouped')
+    async findGroupedByCategoryMenu(): Promise<GroupedElementoMenuDto> {
+        return await this.elementosMenuService.findGroupedByCategoryMenu();
     }
 
     @Put(':id')
@@ -59,6 +74,28 @@ export class ElementosMenuController {
         try {
             await this.elementosMenuService.remove(id);
         } catch (error) {
+            throw new NotFoundException();
+        }
+    }
+
+    @Post('upload/:id')
+    @UseInterceptors(
+        FileInterceptor('image', {
+            storage: diskStorage({
+                filename: editFileName,
+                destination: './uploads/elementos-menu',
+            }),
+            fileFilter: imageFileFilter,
+        }),
+    )
+    async upload(
+        @UploadedFile() image: Express.Multer.File,
+        @Param('id') id: number,
+    ) {
+        try {
+            await this.elementosMenuService.uploadImage(id, image.path);
+        } catch (error) {
+            console.log(error);
             throw new NotFoundException();
         }
     }

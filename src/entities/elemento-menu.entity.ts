@@ -43,6 +43,9 @@ export class ElementoMenu {
     @ManyToOne(
         () => CategoriaMenu,
         (categoriaMenu) => categoriaMenu.elementosMenu,
+        {
+            cascade: true,
+        },
     )
     categoriaMenu: CategoriaMenu;
 
