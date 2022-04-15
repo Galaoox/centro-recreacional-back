@@ -23,6 +23,7 @@ import { Horario } from '@entities/horario.entity';
 import { CategoriaMenu } from '@entities/categoria-menu.entity';
 import { ElementoMenu } from '@entities/elemento-menu.entity';
 import { Atraccion } from '@entities/atraccion.entity';
+import { TiposDocumentosModule } from '@modules/tipos-documentos/tipos-documentos.module';
 
 @Module({
     imports: [
@@ -63,6 +64,7 @@ import { Atraccion } from '@entities/atraccion.entity';
         CategoriasMenuModule,
         AtraccionesModule,
         ElementosMenuModule,
+        TiposDocumentosModule,
     ],
     controllers: [],
     providers: [AppService],
