@@ -24,7 +24,8 @@ import { CategoriaMenu } from '@entities/categoria-menu.entity';
 import { ElementoMenu } from '@entities/elemento-menu.entity';
 import { Atraccion } from '@entities/atraccion.entity';
 import { TiposDocumentosModule } from '@modules/tipos-documentos/tipos-documentos.module';
-
+import { UsuariosModule } from '@modules/usuarios/usuarios.module';
+import { AuthModule } from '@modules/auth/auth.module';
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -65,6 +66,8 @@ import { TiposDocumentosModule } from '@modules/tipos-documentos/tipos-documento
         AtraccionesModule,
         ElementosMenuModule,
         TiposDocumentosModule,
+        UsuariosModule,
+        AuthModule,
     ],
     controllers: [],
     providers: [AppService],

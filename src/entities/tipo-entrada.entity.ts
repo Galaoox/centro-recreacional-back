@@ -1,4 +1,4 @@
-import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
+import { ColumnNumericTransformer } from '@utils/column-numeric-transformer.utility';
 import { Entrada } from '@entities/entrada.entity';
 import {
     Entity,

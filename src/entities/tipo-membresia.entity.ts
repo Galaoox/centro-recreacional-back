@@ -7,7 +7,7 @@ import {
     DeleteDateColumn,
     OneToMany,
 } from 'typeorm';
-import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
+import { ColumnNumericTransformer } from '@utils/column-numeric-transformer.utility';
 import { Membresia } from '@entities/membresia.entity';
 
 @Entity()

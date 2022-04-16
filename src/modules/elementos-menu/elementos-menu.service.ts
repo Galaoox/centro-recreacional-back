@@ -58,7 +58,6 @@ export class ElementosMenuService {
             relations: ['categoriaMenu'],
         });
         const groupedData = data.reduce((acc, curr) => {
-            console.log(acc, curr);
             if (!acc[curr.categoriaMenu.nombre]) {
                 acc[curr.categoriaMenu.nombre] = [];
             }

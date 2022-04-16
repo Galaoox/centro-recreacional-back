@@ -8,7 +8,7 @@ import {
     ManyToOne,
 } from 'typeorm';
 import { Usuario } from '@entities/usuario.entity';
-import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
+import { ColumnNumericTransformer } from '@utils/column-numeric-transformer.utility';
 import { Factura } from '@entities/factura.entity';
 import { TipoEntrada } from '@entities/tipo-entrada.entity';
 

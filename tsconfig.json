@@ -27,6 +27,12 @@
             "@modules/*": [
                 "./src/modules/*"
             ],
+            "@enums/*": [
+                "./src/enums/*"
+            ],
+            "@guards/*": [
+                "./src/guards/*"
+            ],
         }
     }
 }

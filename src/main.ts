@@ -10,9 +10,9 @@ async function bootstrap() {
             origin: '*',
             methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         },
+        bufferLogs: true,
     });
     app.setGlobalPrefix('api');
-
     const configService = app.get(ConfigService);
     const port = configService.get('PORT');
 
@@ -20,6 +20,7 @@ async function bootstrap() {
         .setTitle('Centro recreacional api')
         .setDescription('')
         .setVersion('1.0')
+        .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('', app, document);

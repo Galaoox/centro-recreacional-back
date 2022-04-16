@@ -9,7 +9,7 @@ import {
     OneToMany,
 } from 'typeorm';
 import { Usuario } from '@entities/usuario.entity';
-import { ColumnNumericTransformer } from '@utils/ColumnNumericTransformer';
+import { ColumnNumericTransformer } from '@utils/column-numeric-transformer.utility';
 import { Membresia } from '@entities/membresia.entity';
 import { Alojamiento } from '@entities/alojamiento.entity';
 import { Entrada } from '@entities/entrada.entity';
