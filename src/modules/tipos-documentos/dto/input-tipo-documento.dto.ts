@@ -1,8 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, MaxLength } from 'class-validator';
 
 export class InputTipoDocumentoDto {
     @IsNotEmpty()
-    @ApiProperty()
+    @MaxLength(50)
+    @ApiProperty({
+        maxLength: 50,
+        nullable: false,
+    })
     nombre: string;
 }

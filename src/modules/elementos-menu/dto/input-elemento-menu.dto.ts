@@ -1,12 +1,32 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, MaxLength } from 'class-validator';
 
 export class InputElementoMenuDto {
-    @ApiProperty()
+    @IsNotEmpty()
+    @MaxLength(50)
+    @ApiProperty({
+        maxLength: 50,
+        nullable: false,
+    })
     nombre: string;
-    @ApiProperty()
+
+    @IsNotEmpty()
+    @MaxLength(200)
+    @ApiProperty({
+        maxLength: 200,
+        nullable: false,
+    })
     descripcion: string;
-    @ApiProperty()
+
+    @IsNotEmpty()
+    @ApiProperty({
+        nullable: false,
+    })
     valor: number;
-    @ApiProperty()
+
+    @IsNotEmpty()
+    @ApiProperty({
+        nullable: false,
+    })
     categoriaMenuId: number;
 }
