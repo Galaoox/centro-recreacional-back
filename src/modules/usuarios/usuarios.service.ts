@@ -1,5 +1,5 @@
 import { Usuario } from '@entities/usuario.entity';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { encrypt } from '@utils/bcrypt.utility';
 import { Repository } from 'typeorm';
@@ -33,7 +33,15 @@ export class UsuariosService {
 
     async update(id: number, usuario: UpdateUsuarioDto): Promise<void> {
         const usuarioToUpdate = await this.usuarioRepository.findOne(id);
-        if (!usuarioToUpdate) throw new Error("Usuario doesn't exist");
+        if (!usuarioToUpdate) {
+            throw new HttpException(
+                {
+                    status: HttpStatus.NOT_FOUND,
+                    error: 'No se encontro el usuario',
+                },
+                HttpStatus.NOT_FOUND,
+            );
+        }
         this.usuarioRepository.save({
             ...usuarioToUpdate,
             ...usuario,
@@ -74,7 +82,15 @@ export class UsuariosService {
             ],
             relations: ['tipoDocumento', 'rol'],
         });
-        if (!data) throw new Error('Tipo documento not found');
+        if (!data) {
+            throw new HttpException(
+                {
+                    status: HttpStatus.NOT_FOUND,
+                    error: 'No se encontro el usuario',
+                },
+                HttpStatus.NOT_FOUND,
+            );
+        }
         return data;
     }
 

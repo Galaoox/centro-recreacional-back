@@ -26,6 +26,7 @@ import { Atraccion } from '@entities/atraccion.entity';
 import { TiposDocumentosModule } from '@modules/tipos-documentos/tipos-documentos.module';
 import { UsuariosModule } from '@modules/usuarios/usuarios.module';
 import { AuthModule } from '@modules/auth/auth.module';
+import { TiposAdicionAlojamientoModule } from '@modules/tipos-adicion-alojamiento/tipos-adicion-alojamiento.module';
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -68,6 +69,7 @@ import { AuthModule } from '@modules/auth/auth.module';
         TiposDocumentosModule,
         UsuariosModule,
         AuthModule,
+        TiposAdicionAlojamientoModule,
     ],
     controllers: [],
     providers: [AppService],

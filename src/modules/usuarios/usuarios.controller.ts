@@ -37,6 +37,7 @@ export class UsuariosController {
             return await this.usuariosService.findAll();
         } catch (error) {
             Logger.error(error);
+            throw new BadRequestException();
         }
     }
 
@@ -46,7 +47,7 @@ export class UsuariosController {
             return await this.usuariosService.findOne(id);
         } catch (error) {
             Logger.error(error);
-            throw new NotFoundException();
+            throw new BadRequestException();
         }
     }
 
@@ -56,7 +57,7 @@ export class UsuariosController {
             await this.usuariosService.update(id, usuario);
         } catch (error) {
             Logger.error(error);
-            throw new NotFoundException();
+            throw new BadRequestException();
         }
     }
 
@@ -66,7 +67,7 @@ export class UsuariosController {
             await this.usuariosService.remove(id);
         } catch (error) {
             Logger.error(error);
-            throw new NotFoundException();
+            throw new BadRequestException();
         }
     }
 }

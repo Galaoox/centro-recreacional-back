@@ -34,6 +34,11 @@ export class TipoMembresia {
     })
     public valor: number;
 
+    @Column({
+        type: 'json',
+    })
+    public descuentos: string;
+
     @OneToMany(() => Membresia, (membresia) => membresia.tipoMembresia)
     membresias: Membresia[];
 
