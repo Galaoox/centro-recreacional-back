@@ -27,6 +27,7 @@ import { TiposDocumentosModule } from '@modules/tipos-documentos/tipos-documento
 import { UsuariosModule } from '@modules/usuarios/usuarios.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { TiposAdicionAlojamientoModule } from '@modules/tipos-adicion-alojamiento/tipos-adicion-alojamiento.module';
+import { TiposAlojamientoModule } from './modules/tipos-alojamiento/tipos-alojamiento.module';
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -70,6 +71,7 @@ import { TiposAdicionAlojamientoModule } from '@modules/tipos-adicion-alojamient
         UsuariosModule,
         AuthModule,
         TiposAdicionAlojamientoModule,
+        TiposAlojamientoModule,
     ],
     controllers: [],
     providers: [AppService],

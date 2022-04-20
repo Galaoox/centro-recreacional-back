@@ -14,7 +14,7 @@ import {
 import { InputAtraccionDto } from './dto/input-atraccion.dto';
 import { AtraccionDto } from './dto/atraccion.dto';
 import { AtraccionesService } from './atracciones.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { editFileName, imageFileFilter } from '@utils/file-upload.utility';
 import { diskStorage } from 'multer';
@@ -34,6 +34,18 @@ export class AtraccionesController {
     }
 
     @Post('upload/:id')
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                image: {
+                    type: 'string',
+                    format: 'binary',
+                },
+            },
+        },
+    })
     @UseInterceptors(
         FileInterceptor('image', {
             storage: diskStorage({

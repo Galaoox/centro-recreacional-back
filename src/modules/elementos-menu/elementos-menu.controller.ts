@@ -12,7 +12,7 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { editFileName, imageFileFilter } from '@utils/file-upload.utility';
 import { diskStorage } from 'multer';
 import { ElementoMenuDto } from './dto/elemento-menu.dto';
@@ -79,6 +79,18 @@ export class ElementosMenuController {
     }
 
     @Post('upload/:id')
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                image: {
+                    type: 'string',
+                    format: 'binary',
+                },
+            },
+        },
+    })
     @UseInterceptors(
         FileInterceptor('image', {
             storage: diskStorage({
