@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import express from 'express';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, {
@@ -12,6 +13,7 @@ async function bootstrap() {
         },
         bufferLogs: true,
     });
+    app.use(express.static(__dirname + 'uploads'));
     app.setGlobalPrefix('api');
     const configService = app.get(ConfigService);
     const port = configService.get('PORT');
