@@ -28,6 +28,8 @@ import { UsuariosModule } from '@modules/usuarios/usuarios.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { TiposAdicionAlojamientoModule } from '@modules/tipos-adicion-alojamiento/tipos-adicion-alojamiento.module';
 import { TiposAlojamientoModule } from './modules/tipos-alojamiento/tipos-alojamiento.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -72,6 +74,9 @@ import { TiposAlojamientoModule } from './modules/tipos-alojamiento/tipos-alojam
         AuthModule,
         TiposAdicionAlojamientoModule,
         TiposAlojamientoModule,
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'uploads'),
+        }),
     ],
     controllers: [],
     providers: [AppService],
