@@ -13,7 +13,6 @@ async function bootstrap() {
         },
         bufferLogs: true,
     });
-    app.use(express.static(__dirname + 'uploads'));
     app.setGlobalPrefix('api');
     const configService = app.get(ConfigService);
     const port = configService.get('PORT');
