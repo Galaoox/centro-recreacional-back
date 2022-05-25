@@ -16,8 +16,8 @@ export class HorariosService {
     async create(horario: InputHorarioDto): Promise<void> {
         const data = {
             ...horario,
-            horaInicial: dateToHourAndMinutes(new Date(horario.horaInicial)),
-            horaFinal: dateToHourAndMinutes(new Date(horario.horaFinal)),
+            horaInicial: horario.horaInicial,
+            horaFinal: horario.horaFinal,
         };
         this.horarioRepository.save(data);
     }
@@ -28,8 +28,8 @@ export class HorariosService {
         return this.horarioRepository.save({
             ...horarioToUpdate,
             ...horario,
-            horaInicial: dateToHourAndMinutes(new Date(horario.horaInicial)),
-            horaFinal: dateToHourAndMinutes(new Date(horario.horaFinal)),
+            horaInicial: horario.horaInicial,
+            horaFinal: horario.horaFinal,
         });
     }
 
