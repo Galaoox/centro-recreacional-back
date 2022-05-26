@@ -15,6 +15,12 @@ export const editFileName = (req, file, callback) => {
     callback(null, `${randomName}${fileExtName}`);
 };
 
+export const generateFileName = (file) => {
+    const fileExtName = extname(file.fieldname);
+    const randomName = uuidv4();
+    return `${randomName}${fileExtName}`;
+};
+
 export const deleteFile = (filePath) => {
     if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);

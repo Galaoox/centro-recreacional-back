@@ -1,16 +1,17 @@
 import { Atraccion } from '@entities/atraccion.entity';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { InputAtraccionDto } from './dto/input-atraccion.dto';
 import { AtraccionDto } from './dto/atraccion.dto';
-import { deleteFile } from '@utils/file-upload.utility';
+import { CloudinaryService } from '@modules/cloudinary/cloudinary.service';
 
 @Injectable()
 export class AtraccionesService {
     constructor(
         @InjectRepository(Atraccion)
         private atraccionesRepository: Repository<Atraccion>,
+        private cloudinary: CloudinaryService,
     ) {}
 
     async create(atraccion: InputAtraccionDto): Promise<AtraccionDto> {
@@ -23,11 +24,16 @@ export class AtraccionesService {
         this.atraccionesRepository.save({ ...atraccionToUpdate, ...atraccion });
     }
 
-    async uploadImage(id: number, imagen: string): Promise<void> {
+    async uploadImage(id: number, file: Express.Multer.File): Promise<any> {
         const atraccionToUpdate = await this.atraccionesRepository.findOne(id);
         if (!atraccionToUpdate) throw new Error("atraccion doesn't exist");
-        deleteFile(atraccionToUpdate.imagen);
-        atraccionToUpdate.imagen = imagen;
+        if (atraccionToUpdate.imagen)
+            await this.cloudinary.deleteImage(atraccionToUpdate.imagen);
+        const result = await this.cloudinary.uploadImage(file).catch((e) => {
+            throw new BadRequestException('Invalid file type.');
+        });
+        atraccionToUpdate.imagen = result.public_id;
+
         this.atraccionesRepository.save(atraccionToUpdate);
     }
 

@@ -16,8 +16,7 @@ import { AtraccionDto } from './dto/atraccion.dto';
 import { AtraccionesService } from './atracciones.service';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { editFileName, imageFileFilter } from '@utils/file-upload.utility';
-import { diskStorage } from 'multer';
+import { generateFileName } from '@utils/file-upload.utility';
 
 @ApiTags('Atracciones')
 @Controller('atracciones')
@@ -46,21 +45,13 @@ export class AtraccionesController {
             },
         },
     })
-    @UseInterceptors(
-        FileInterceptor('image', {
-            storage: diskStorage({
-                filename: editFileName,
-                destination: './uploads/atracciones',
-            }),
-            fileFilter: imageFileFilter,
-        }),
-    )
+    @UseInterceptors(FileInterceptor('image'))
     async upload(
         @UploadedFile() image: Express.Multer.File,
         @Param('id') id: number,
     ) {
         try {
-            await this.atraccionesService.uploadImage(id, image.path);
+            await this.atraccionesService.uploadImage(id, image);
         } catch (error) {
             console.log(error);
             throw new NotFoundException();
