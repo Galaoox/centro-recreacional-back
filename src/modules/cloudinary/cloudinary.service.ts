@@ -25,4 +25,8 @@ export class CloudinaryService {
             });
         });
     }
+
+    async getUrlImage(publicId: string) {
+        return v2.url(publicId);
+    }
 }

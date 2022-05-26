@@ -38,15 +38,24 @@ export class AtraccionesService {
     }
 
     async findAll(): Promise<AtraccionDto[]> {
-        return this.atraccionesRepository.find({
+        const data: AtraccionDto[] = await this.atraccionesRepository.find({
             select: ['id', 'nombre', 'descripcion', 'imagen'],
         });
+        const promises = await data.map(async (item) => {
+            return {
+                ...item,
+                imagen: await this.cloudinary.getUrlImage(item.imagen),
+            };
+        });
+        const result = await Promise.all(promises);
+        return result;
     }
 
     async findOne(id: number): Promise<AtraccionDto> {
         const data = await this.atraccionesRepository.findOne(id, {
             select: ['id', 'nombre'],
         });
+        data.imagen = await this.cloudinary.getUrlImage(data.imagen);
         if (!data) throw new Error('atraccion not found');
         return data;
     }
