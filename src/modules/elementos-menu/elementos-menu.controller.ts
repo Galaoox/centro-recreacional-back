@@ -91,21 +91,13 @@ export class ElementosMenuController {
             },
         },
     })
-    @UseInterceptors(
-        FileInterceptor('image', {
-            storage: diskStorage({
-                filename: editFileName,
-                destination: './uploads/elementos-menu',
-            }),
-            fileFilter: imageFileFilter,
-        }),
-    )
+    @UseInterceptors(FileInterceptor('image'))
     async upload(
         @UploadedFile() image: Express.Multer.File,
         @Param('id') id: number,
     ) {
         try {
-            await this.elementosMenuService.uploadImage(id, image.path);
+            await this.elementosMenuService.uploadImage(id, image);
         } catch (error) {
             console.log(error);
             throw new NotFoundException();

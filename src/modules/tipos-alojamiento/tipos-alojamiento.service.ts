@@ -1,17 +1,18 @@
 import { TipoAlojamiento } from '@entities/tipo-alojamiento.entity';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { deleteFile } from '@utils/file-upload.utility';
 import { Repository } from 'typeorm';
 import { InputTipoAlojamientoDto } from './dto/input-tipo-alojamiento.dto';
 import { TipoAlojamientoDto } from './dto/tipo-alojamiento.dto';
 import { HttpNotFoundError } from '@utils/custom-errors-http.utility';
+import { CloudinaryService } from '@modules/cloudinary/cloudinary.service';
 
 @Injectable()
 export class TiposAlojamientoService {
     constructor(
         @InjectRepository(TipoAlojamiento)
         private repository: Repository<TipoAlojamiento>,
+        private cloudinary: CloudinaryService,
     ) {}
 
     async create(
@@ -38,7 +39,14 @@ export class TiposAlojamientoService {
 
     async findAll(): Promise<TipoAlojamientoDto[]> {
         const data = await this.repository.find();
-        return data;
+        const promises = await data.map(async (item) => {
+            return {
+                ...item,
+                imagen: await this.cloudinary.getUrlImage(item.imagen),
+            };
+        });
+        const result = await Promise.all(promises);
+        return result;
     }
 
     async findOne(id: number): Promise<TipoAlojamientoDto> {
@@ -46,6 +54,7 @@ export class TiposAlojamientoService {
         if (!data) {
             throw new HttpNotFoundError('El tipo de alojamiento no existe');
         }
+        data.imagen = await this.cloudinary.getUrlImage(data.imagen);
         return data;
     }
 
@@ -53,13 +62,17 @@ export class TiposAlojamientoService {
         return this.repository.softDelete(id);
     }
 
-    async uploadImage(id: number, imagen: string): Promise<void> {
+    async uploadImage(id: number, imagen: Express.Multer.File): Promise<void> {
         const tipoAlojamientoToUpdate = await this.repository.findOne(id);
         if (!tipoAlojamientoToUpdate) {
             throw new HttpNotFoundError('El tipo de alojamiento no existe');
         }
-        deleteFile(tipoAlojamientoToUpdate.imagen);
-        tipoAlojamientoToUpdate.imagen = imagen;
+        if (tipoAlojamientoToUpdate.imagen)
+            await this.cloudinary.deleteImage(tipoAlojamientoToUpdate.imagen);
+        const result = await this.cloudinary.uploadImage(imagen).catch((e) => {
+            throw new BadRequestException('Invalid file type.');
+        });
+        tipoAlojamientoToUpdate.imagen = result.public_id;
         this.repository.save(tipoAlojamientoToUpdate);
     }
 }

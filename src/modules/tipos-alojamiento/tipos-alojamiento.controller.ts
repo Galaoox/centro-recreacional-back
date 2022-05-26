@@ -67,19 +67,11 @@ export class TiposAlojamientoController {
             },
         },
     })
-    @UseInterceptors(
-        FileInterceptor('image', {
-            storage: diskStorage({
-                filename: editFileName,
-                destination: './uploads/tipos-alojamiento',
-            }),
-            fileFilter: imageFileFilter,
-        }),
-    )
+    @UseInterceptors(FileInterceptor('image'))
     async upload(
         @UploadedFile() image: Express.Multer.File,
         @Param('id') id: number,
     ) {
-        await this.tipoAlojamientoService.uploadImage(id, image.path);
+        await this.tipoAlojamientoService.uploadImage(id, image);
     }
 }

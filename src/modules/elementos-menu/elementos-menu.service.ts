@@ -1,17 +1,18 @@
 import { ElementoMenu } from '@entities/elemento-menu.entity';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { deleteFile } from '@utils/file-upload.utility';
 import { Repository } from 'typeorm';
 import { ElementoMenuDto } from './dto/elemento-menu.dto';
 import { GroupedElementoMenuDto } from './dto/grouped-elemento-menu.dto';
 import { InputElementoMenuDto } from './dto/input-elemento-menu.dto';
+import { CloudinaryService } from '@modules/cloudinary/cloudinary.service';
 
 @Injectable()
 export class ElementosMenuService {
     constructor(
         @InjectRepository(ElementoMenu)
         private elementoMenuRepository: Repository<ElementoMenu>,
+        private cloudinary: CloudinaryService,
     ) {}
 
     async create(elementoMenu: InputElementoMenuDto): Promise<ElementoMenuDto> {
@@ -42,13 +43,21 @@ export class ElementosMenuService {
 
     async findAll(): Promise<ElementoMenuDto[]> {
         const data = await this.elementoMenuRepository.find();
-        return data;
+        const promises = await data.map(async (item) => {
+            return {
+                ...item,
+                imagen: await this.cloudinary.getUrlImage(item.imagen),
+            };
+        });
+        const result = await Promise.all(promises);
+        return result;
     }
 
     async findOne(id: number): Promise<ElementoMenuDto> {
         const data = await this.elementoMenuRepository.findOne(id, {
             relations: ['categoriaMenu'],
         });
+        data.imagen = await this.cloudinary.getUrlImage(data.imagen);
         if (!data) throw new Error('Categoria not found');
         return data;
     }
@@ -71,14 +80,19 @@ export class ElementosMenuService {
         return this.elementoMenuRepository.softDelete(id);
     }
 
-    async uploadImage(id: number, imagen: string): Promise<void> {
+    async uploadImage(id: number, imagen: Express.Multer.File): Promise<void> {
         const elementoMenuToUpdate = await this.elementoMenuRepository.findOne(
             id,
         );
         if (!elementoMenuToUpdate)
             throw new Error("Elemento Menu doesn't exist");
-        deleteFile(elementoMenuToUpdate.imagen);
-        elementoMenuToUpdate.imagen = imagen;
+        if (elementoMenuToUpdate.imagen) {
+            await this.cloudinary.deleteImage(elementoMenuToUpdate.imagen);
+        }
+        const result = await this.cloudinary.uploadImage(imagen).catch((e) => {
+            throw new BadRequestException('Invalid file type.');
+        });
+        elementoMenuToUpdate.imagen = result.public_id;
         this.elementoMenuRepository.save(elementoMenuToUpdate);
     }
 }

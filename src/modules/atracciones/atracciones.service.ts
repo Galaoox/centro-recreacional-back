@@ -55,8 +55,8 @@ export class AtraccionesService {
         const data = await this.atraccionesRepository.findOne(id, {
             select: ['id', 'nombre'],
         });
-        data.imagen = await this.cloudinary.getUrlImage(data.imagen);
         if (!data) throw new Error('atraccion not found');
+        data.imagen = await this.cloudinary.getUrlImage(data.imagen);
         return data;
     }
 
