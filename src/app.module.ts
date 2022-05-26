@@ -74,9 +74,6 @@ import { join } from 'path';
         AuthModule,
         TiposAdicionAlojamientoModule,
         TiposAlojamientoModule,
-        ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '..', 'uploads'),
-        }),
     ],
     controllers: [],
     providers: [AppService],
