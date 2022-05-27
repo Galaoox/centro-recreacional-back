@@ -11,6 +11,7 @@ async function bootstrap() {
         cors: {
             origin: '*',
             methods: '*',
+            allowedHeaders: '*',
         },
         bufferLogs: true,
     });
