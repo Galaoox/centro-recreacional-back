@@ -13,7 +13,7 @@ export class TiposDocumentosService {
     ) {}
 
     async create(tipoDocumento: InputTipoDocumentoDto): Promise<void> {
-        this.tipoDocumentoRepository.save(tipoDocumento);
+        await this.tipoDocumentoRepository.save(tipoDocumento);
     }
 
     async update(
@@ -24,7 +24,7 @@ export class TiposDocumentosService {
             await this.tipoDocumentoRepository.findOne(id);
         if (!tipoDocumentoToUpdate)
             throw new Error("Tipo documento doesn't exist");
-        this.tipoDocumentoRepository.save({
+        await this.tipoDocumentoRepository.save({
             ...tipoDocumentoToUpdate,
             ...tipoDocumento,
         });
