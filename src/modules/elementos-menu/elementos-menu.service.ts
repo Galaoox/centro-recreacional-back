@@ -68,14 +68,15 @@ export class ElementosMenuService {
         const data = await this.elementoMenuRepository.find({
             relations: ['categoriaMenu'],
         });
-        const groupedData = await data.reduce(async (acc, curr) => {
-            if (!acc[curr.categoriaMenu.nombre]) {
-                acc[curr.categoriaMenu.nombre] = [];
+        const groupedData = {};
+        data.forEach(async (item) => {
+            if (!groupedData[item.categoriaMenu.nombre]) {
+                groupedData[item.categoriaMenu.nombre] = [];
             }
-            curr.imagen = await this.cloudinary.getUrlImage(curr.imagen);
-            acc[curr.categoriaMenu.nombre].push(curr);
-            return acc;
-        }, {});
+            item.imagen = await this.cloudinary.getUrlImage(item.imagen);
+
+            groupedData[item.categoriaMenu.nombre].push(item);
+        });
         return groupedData;
     }
 
