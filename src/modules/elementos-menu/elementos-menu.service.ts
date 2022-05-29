@@ -42,7 +42,9 @@ export class ElementosMenuService {
     }
 
     async findAll(): Promise<ElementoMenuDto[]> {
-        const data = await this.elementoMenuRepository.find();
+        const data = await this.elementoMenuRepository.find({
+            relations: ['categoriaMenu'],
+        });
         const promises = await data.map(async (item) => {
             return {
                 ...item,
