@@ -4,6 +4,8 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { join } from 'path';
+import { urlencoded, json } from 'express';
+
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
@@ -15,6 +17,8 @@ async function bootstrap() {
         },
         bufferLogs: true,
     });
+    app.use(json({ limit: '50mb' }));
+    app.use(urlencoded({ limit: '50mb', extended: true }));
     app.setGlobalPrefix('api');
     const configService = app.get(ConfigService);
     const port = configService.get('PORT');

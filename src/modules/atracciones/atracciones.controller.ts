@@ -33,25 +33,9 @@ export class AtraccionesController {
     }
 
     @Post('upload/:id')
-    @ApiConsumes('multipart/form-data')
-    @ApiBody({
-        schema: {
-            type: 'object',
-            properties: {
-                image: {
-                    type: 'string',
-                    format: 'binary',
-                },
-            },
-        },
-    })
-    @UseInterceptors(FileInterceptor('image'))
-    async upload(
-        @UploadedFile() image: Express.Multer.File,
-        @Param('id') id: number,
-    ) {
+    async upload(@Body() data, @Param('id') id: number) {
         try {
-            await this.atraccionesService.uploadImage(id, image);
+            await this.atraccionesService.uploadImage(id, data.image);
         } catch (error) {
             console.log(error);
             throw new NotFoundException();

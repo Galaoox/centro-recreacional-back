@@ -80,7 +80,7 @@ export class ElementosMenuService {
         return this.elementoMenuRepository.softDelete(id);
     }
 
-    async uploadImage(id: number, imagen: Express.Multer.File): Promise<void> {
+    async uploadImage(id: number, imagen: string): Promise<void> {
         const elementoMenuToUpdate = await this.elementoMenuRepository.findOne(
             id,
         );
@@ -89,9 +89,11 @@ export class ElementosMenuService {
         if (elementoMenuToUpdate.imagen) {
             await this.cloudinary.deleteImage(elementoMenuToUpdate.imagen);
         }
-        const result = await this.cloudinary.uploadImage(imagen).catch((e) => {
-            throw new BadRequestException('Invalid file type.');
-        });
+        const result = await this.cloudinary
+            .uploadImageBase64(imagen)
+            .catch((e) => {
+                throw new BadRequestException('Invalid file type.');
+            });
         elementoMenuToUpdate.imagen = result.public_id;
         this.elementoMenuRepository.save(elementoMenuToUpdate);
     }

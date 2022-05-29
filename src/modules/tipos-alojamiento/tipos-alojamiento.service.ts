@@ -62,16 +62,20 @@ export class TiposAlojamientoService {
         return this.repository.softDelete(id);
     }
 
-    async uploadImage(id: number, imagen: Express.Multer.File): Promise<void> {
+    async uploadImage(id: number, imagen: string): Promise<void> {
         const tipoAlojamientoToUpdate = await this.repository.findOne(id);
         if (!tipoAlojamientoToUpdate) {
             throw new HttpNotFoundError('El tipo de alojamiento no existe');
         }
         if (tipoAlojamientoToUpdate.imagen)
             await this.cloudinary.deleteImage(tipoAlojamientoToUpdate.imagen);
-        const result = await this.cloudinary.uploadImage(imagen).catch((e) => {
-            throw new BadRequestException('Invalid file type.');
-        });
+        const result = await this.cloudinary
+            .uploadImageBase64(imagen)
+            .catch((e) => {
+                console.log(e);
+                console.log(imagen);
+                throw new BadRequestException('Invalid file type.');
+            });
         tipoAlojamientoToUpdate.imagen = result.public_id;
         this.repository.save(tipoAlojamientoToUpdate);
     }

@@ -24,14 +24,16 @@ export class AtraccionesService {
         this.atraccionesRepository.save({ ...atraccionToUpdate, ...atraccion });
     }
 
-    async uploadImage(id: number, file: Express.Multer.File): Promise<any> {
+    async uploadImage(id: number, file: string): Promise<any> {
         const atraccionToUpdate = await this.atraccionesRepository.findOne(id);
         if (!atraccionToUpdate) throw new Error("atraccion doesn't exist");
         if (atraccionToUpdate.imagen)
             await this.cloudinary.deleteImage(atraccionToUpdate.imagen);
-        const result = await this.cloudinary.uploadImage(file).catch((e) => {
-            throw new BadRequestException('Invalid file type.');
-        });
+        const result = await this.cloudinary
+            .uploadImageBase64(file)
+            .catch((e) => {
+                throw new BadRequestException('Invalid file type.');
+            });
         atraccionToUpdate.imagen = result.public_id;
 
         this.atraccionesRepository.save(atraccionToUpdate);

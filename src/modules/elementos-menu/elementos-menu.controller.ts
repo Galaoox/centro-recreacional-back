@@ -79,25 +79,9 @@ export class ElementosMenuController {
     }
 
     @Post('upload/:id')
-    @ApiConsumes('multipart/form-data')
-    @ApiBody({
-        schema: {
-            type: 'object',
-            properties: {
-                image: {
-                    type: 'string',
-                    format: 'binary',
-                },
-            },
-        },
-    })
-    @UseInterceptors(FileInterceptor('image'))
-    async upload(
-        @UploadedFile() image: Express.Multer.File,
-        @Param('id') id: number,
-    ) {
+    async upload(@Body() data, @Param('id') id: number) {
         try {
-            await this.elementosMenuService.uploadImage(id, image);
+            await this.elementosMenuService.uploadImage(id, data.image);
         } catch (error) {
             console.log(error);
             throw new NotFoundException();

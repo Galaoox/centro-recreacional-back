@@ -4,17 +4,10 @@ import {
     Get,
     Param,
     Post,
-    Logger,
-    BadRequestException,
     Put,
     Delete,
-    UseInterceptors,
-    UploadedFile,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { editFileName, imageFileFilter } from '@utils/file-upload.utility';
-import { diskStorage } from 'multer';
+import { ApiTags } from '@nestjs/swagger';
 import { InputTipoAlojamientoDto } from './dto/input-tipo-alojamiento.dto';
 import { TipoAlojamientoDto } from './dto/tipo-alojamiento.dto';
 import { TiposAlojamientoService } from './tipos-alojamiento.service';
@@ -55,23 +48,7 @@ export class TiposAlojamientoController {
     }
 
     @Post('upload/:id')
-    @ApiConsumes('multipart/form-data')
-    @ApiBody({
-        schema: {
-            type: 'object',
-            properties: {
-                image: {
-                    type: 'string',
-                    format: 'binary',
-                },
-            },
-        },
-    })
-    @UseInterceptors(FileInterceptor('image'))
-    async upload(
-        @UploadedFile() image: Express.Multer.File,
-        @Param('id') id: number,
-    ) {
-        await this.tipoAlojamientoService.uploadImage(id, image);
+    async upload(@Body() data, @Param('id') id: number) {
+        await this.tipoAlojamientoService.uploadImage(id, data.image);
     }
 }
