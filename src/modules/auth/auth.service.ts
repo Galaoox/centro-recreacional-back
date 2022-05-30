@@ -67,6 +67,7 @@ export class AuthService {
         return {
             access_token: this.jwtService.sign(info),
             nombre: info.nombre,
+            rol: user.rolId,
         };
     }
 }

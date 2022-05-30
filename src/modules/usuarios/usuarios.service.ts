@@ -18,7 +18,15 @@ export class UsuariosService {
         const emailExists = await this.validateIfEmailExists(
             usuario.correoElectronico,
         );
-        if (emailExists) throw new Error('Email already exists');
+        if (emailExists) {
+            throw new HttpException(
+                {
+                    status: HttpStatus.CONFLICT,
+                    error: 'El correo electronico ya se encuentra en uso',
+                },
+                HttpStatus.CONFLICT,
+            );
+        }
         usuario.contrasena = await encrypt(usuario.contrasena);
         return await this.usuarioRepository.save({
             ...usuario,
@@ -94,22 +102,14 @@ export class UsuariosService {
         return data;
     }
 
-    async findByEmail(email: string): Promise<UsuarioDto> {
-        const data = await this.usuarioRepository.findOne({
+    async findByEmail(email: string): Promise<any> {
+        const data: any = await this.usuarioRepository.findOne({
             where: {
                 correoElectronico: email,
             },
-            select: [
-                'id',
-                'nombre1',
-                'nombre2',
-                'apellido1',
-                'apellido2',
-                'correoElectronico',
-                'documento',
-                'contrasena',
-            ],
+            relations: ['tipoDocumento', 'rol'],
         });
+        data.rolId = data.rol.id;
         return data;
     }
 
