@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, MaxLength, IsEmail } from 'class-validator';
+import { IsNull } from 'typeorm';
 export class CreateUsuarioDto {
     @IsNotEmpty()
     @MaxLength(50)
@@ -9,11 +10,7 @@ export class CreateUsuarioDto {
     })
     nombre1: string;
 
-    @MaxLength(50)
-    @ApiProperty({
-        maxLength: 50,
-        required: false,
-    })
+    @ApiProperty()
     nombre2: string;
 
     @IsNotEmpty()
@@ -24,11 +21,7 @@ export class CreateUsuarioDto {
     })
     apellido1: string;
 
-    @MaxLength(50)
-    @ApiProperty({
-        maxLength: 50,
-        required: true,
-    })
+    @ApiProperty()
     apellido2: string;
 
     @IsNotEmpty()

@@ -24,7 +24,6 @@ export class AuthController {
             return await this.authService.registerUser(usuario);
         } catch (error) {
             Logger.error(error);
-            throw new BadRequestException();
         }
     }
 

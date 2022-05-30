@@ -64,9 +64,9 @@ export class AuthService {
                 .filter((val) => val)
                 .join(' '),
         };
-        console.log(info);
         return {
             access_token: this.jwtService.sign(info),
+            nombre: info.nombre,
         };
     }
 }

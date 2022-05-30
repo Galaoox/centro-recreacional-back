@@ -9,11 +9,7 @@ export class RegisterUsuarioDto {
     })
     nombre1: string;
 
-    @MaxLength(50)
-    @ApiProperty({
-        maxLength: 50,
-        required: false,
-    })
+    @ApiProperty()
     nombre2: string;
 
     @IsNotEmpty()
@@ -24,11 +20,7 @@ export class RegisterUsuarioDto {
     })
     apellido1: string;
 
-    @MaxLength(50)
-    @ApiProperty({
-        maxLength: 50,
-        required: true,
-    })
+    @ApiProperty()
     apellido2: string;
 
     @IsNotEmpty()
