@@ -37,8 +37,8 @@ export class Entrada {
     @ManyToOne(() => Usuario, (usuario) => usuario.entradas)
     usuario: Usuario;
 
-    @ManyToOne(() => Factura, (factura) => factura.entradas)
-    factura: Factura;
+    // @ManyToOne(() => Factura, (factura) => factura.entradas)
+    // factura: Factura;
 
     @ManyToOne(() => TipoEntrada, (tipoEntrada) => tipoEntrada.entradas)
     tipoEntrada: TipoEntrada;

@@ -29,6 +29,8 @@ import { AuthModule } from '@modules/auth/auth.module';
 import { TiposAdicionAlojamientoModule } from '@modules/tipos-adicion-alojamiento/tipos-adicion-alojamiento.module';
 import { TiposAlojamientoModule } from './modules/tipos-alojamiento/tipos-alojamiento.module';
 import { TiposMembresiasModule } from '@modules/tipos-membresias/tipos-membresias.module';
+import { HospedajeModule } from '@modules/hospedaje/hospedaje.module';
+import { MembresiasModule } from '@modules/membresias/membresias.module';
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -74,6 +76,8 @@ import { TiposMembresiasModule } from '@modules/tipos-membresias/tipos-membresia
         TiposAdicionAlojamientoModule,
         TiposAlojamientoModule,
         TiposMembresiasModule,
+        HospedajeModule,
+        MembresiasModule,
     ],
     controllers: [],
     providers: [AppService],

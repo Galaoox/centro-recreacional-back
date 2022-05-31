@@ -45,12 +45,6 @@ export class Alojamiento {
     })
     public valorTotal: number;
 
-    @Column({
-        length: 200,
-        nullable: false,
-    })
-    imagen: string;
-
     @ManyToOne(
         () => TipoAlojamiento,
         (tipoAlojamiento) => tipoAlojamiento.alojamientos,
@@ -66,8 +60,8 @@ export class Alojamiento {
     )
     adicionesAlojamientos: AdicionAlojamiento[];
 
-    @ManyToOne(() => Factura, (factura) => factura.alojamientos)
-    factura: Factura;
+    // @ManyToOne(() => Factura, (factura) => factura.alojamientos)
+    // factura: Factura;
 
     @CreateDateColumn({
         type: 'timestamp',

@@ -69,8 +69,8 @@ export class Usuario {
     @ManyToOne(() => TipoDocumento, (tipoDocumento) => tipoDocumento.usuarios)
     tipoDocumento: Roles;
 
-    @OneToMany(() => Factura, (factura) => factura.usuario)
-    facturas: Factura[];
+    // @OneToMany(() => Factura, (factura) => factura.usuario)
+    // facturas: Factura[];
 
     @OneToMany(() => Alojamiento, (alojamiento) => alojamiento.usuario)
     alojamientos: Alojamiento[];

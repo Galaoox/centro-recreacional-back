@@ -30,18 +30,16 @@ export class Membresia {
     })
     public valor: number;
 
-    @Column('numeric', {
-        precision: 16,
-        scale: 2,
-        transformer: new ColumnNumericTransformer(),
+    @Column({
+        type: 'json',
     })
-    public valorTotal: number;
+    public descuentos: string;
 
     @ManyToOne(() => TipoMembresia, (tipoMembresia) => tipoMembresia.membresias)
     tipoMembresia: TipoMembresia;
 
-    @ManyToOne(() => Factura, (factura) => factura.membresias)
-    factura: Factura;
+    // @ManyToOne(() => Factura, (factura) => factura.membresias)
+    // factura: Factura;
 
     @ManyToOne(() => Usuario, (usuario) => usuario.membresias)
     usuario: Usuario;

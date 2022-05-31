@@ -26,17 +26,17 @@ export class Factura {
     })
     public valorTotal: number;
 
-    @ManyToOne(() => Usuario, (usuario) => usuario.facturas)
-    usuario: Usuario;
+    // @ManyToOne(() => Usuario, (usuario) => usuario.facturas)
+    // usuario: Usuario;
 
-    @OneToMany(() => Membresia, (membresia) => membresia.factura)
-    membresias: Membresia[];
+    // @OneToMany(() => Membresia, (membresia) => membresia.factura)
+    // membresias: Membresia[];
 
-    @OneToMany(() => Alojamiento, (alojamiento) => alojamiento.factura)
-    alojamientos: Alojamiento[];
+    // @OneToMany(() => Alojamiento, (alojamiento) => alojamiento.factura)
+    // alojamientos: Alojamiento[];
 
-    @OneToMany(() => Entrada, (entrada) => entrada.factura)
-    entradas: Entrada[];
+    // @OneToMany(() => Entrada, (entrada) => entrada.factura)
+    // entradas: Entrada[];
 
     @CreateDateColumn({
         type: 'timestamp',
