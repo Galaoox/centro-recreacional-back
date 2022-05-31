@@ -33,7 +33,7 @@ export class AdicionesAlojamientoService {
         const elementoMenuToUpdate =
             await this.adicionAlojamientoRepository.findOne(id);
         if (!elementoMenuToUpdate) throw new Error("Elemento doesn't exist");
-        this.adicionAlojamientoRepository.save({
+        await this.adicionAlojamientoRepository.save({
             ...elementoMenuToUpdate,
             ...adicionAlojamiento,
             tipoAdicionAlojamiento: {
