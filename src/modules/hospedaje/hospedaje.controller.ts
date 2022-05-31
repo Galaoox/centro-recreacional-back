@@ -3,6 +3,7 @@ import {
     BadRequestException,
     Body,
     Controller,
+    Get,
     Post,
     Request,
     UseGuards,
@@ -22,6 +23,17 @@ export class HospedajeController {
         try {
             data.usuarioId = req.user.id;
             await this.hospedajeService.create(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    @Get('getAllHospedajesByUsuario')
+    async getAllHospedajesByUsuario(@Request() req): Promise<any> {
+        try {
+            return await this.hospedajeService.getAllHospedajesByUsusarioId(
+                req.user.id,
+            );
         } catch (error) {
             console.error(error);
         }

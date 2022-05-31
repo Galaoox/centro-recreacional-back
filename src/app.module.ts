@@ -32,6 +32,7 @@ import { TiposMembresiasModule } from '@modules/tipos-membresias/tipos-membresia
 import { HospedajeModule } from '@modules/hospedaje/hospedaje.module';
 import { MembresiasModule } from '@modules/membresias/membresias.module';
 import { TiposEntradasModule } from '@modules/tipos-entradas/tipos-entradas.module';
+import { EntradasModule } from '@modules/entradas/entradas.module';
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -80,6 +81,7 @@ import { TiposEntradasModule } from '@modules/tipos-entradas/tipos-entradas.modu
         HospedajeModule,
         MembresiasModule,
         TiposEntradasModule,
+        EntradasModule,
     ],
     controllers: [],
     providers: [AppService],

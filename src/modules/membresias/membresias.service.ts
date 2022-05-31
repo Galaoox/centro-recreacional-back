@@ -2,6 +2,7 @@ import { Membresia } from '@entities/membresia.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { datetoAAAMMDD } from '../../utils/transform-date.utility';
 
 @Injectable()
 export class MembresiasService {
@@ -37,7 +38,12 @@ export class MembresiasService {
                     id: usuarioId,
                 },
             },
+            relations: ['tipoMembresia'],
         });
-        return result;
+        return {
+            ...result,
+            fechaInicio: datetoAAAMMDD(result.fechaInicio),
+            fechaFin: datetoAAAMMDD(result.fechaFin),
+        };
     }
 }
